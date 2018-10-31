@@ -126,7 +126,6 @@ $(document).ready(function() {
         };
         
 
-   
         $("form").hide();
         
         console.log(boardObject);
