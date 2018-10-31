@@ -1,0 +1,14 @@
+.col {
+    width: 33%;
+    border: 2px solid;
+    padding-top: 28%;
+}
+
+#board {
+    width: 60%; 
+    border: 2px solid;   
+}
+
+#header {
+    text-align: center;
+}
