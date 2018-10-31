@@ -1,5 +1,6 @@
 //Business Logic
 
+
 //Game Object
 function GameObject() {
     this.players = [],
@@ -47,8 +48,10 @@ BoardObject.prototype.assignCoords = function(space){
         space.yCoord = 2;
     } else 
         space.yCoord =1
-};
-
+    };
+// BoardObject.prototype.clickFill = function(space){
+//    space.filled = true;
+// }
 //Space Object
 function SpaceObject(filled, xCoord, yCoord){
     this.filled = filled,
@@ -58,17 +61,42 @@ function SpaceObject(filled, xCoord, yCoord){
 }
 
 //Player Object 
-function PlayerObject(name, difficulty, mark){
+function PlayerObject(name, difficulty, marker){
     this.name = name,
     this.difficulty = difficulty,
-    this.mark = mark
+    this.marker = marker
 }
+
+//Click Logic
+
+
+
+
 
 //User Interface Logic
 var gameObject = new GameObject();
 var boardObject = new BoardObject();
 
 $(document).ready(function() {
+    counter = 1;
+    $("div.clickable").click(function(e){
+        var click = e.target;
+       
+        console.log(click.id);
+        if(click && counter%2 ==0 && $(`div#${click.id}`).hasClass("clickable") === true) {
+            
+            $(`div#${click.id}`).text("X");
+            $(`div#${click.id}`).removeClass("clickable");
+            
+        } else if(click && counter%2 !=0 && $(`div#${click.id}`).hasClass("clickable") === true){
+            
+            $(`div#${click.id}`).text("O");
+            $(`div#${click.id}`).removeClass("clickable");
+        }
+        counter++;
+
+    });
+   
     $("#inputButton").click(function(event) {
         event.preventDefault();
         var playerOne = $("input#player1").val();
@@ -76,30 +104,35 @@ $(document).ready(function() {
         var filled = false;
         var xCoord = 0;
         var yCoord = 0;
-
-        var newPlayer = new PlayerObject(playerOne, playerDifficulty, "X");
+        var marker = "";
+        var newPlayer = new PlayerObject(playerOne, playerDifficulty, marker);
+        gameObject.addPlayer(newPlayer);
+        
         //debugger;
         for(var i =0; i < 9; i++){
             var space = new SpaceObject(filled, xCoord, yCoord)
             boardObject.addSpaces(space);
             boardObject.assignCoords(space);
-            if (space.id <= 3) {
-                $("#row1").append("<div id='"+ space.id + "' class='col col-md-4'>"+ space.xCoord +","+ space.yCoord+ "</div>");
-            } else if (space.id <=6 ) {
-                $("#row2").append("<div id='"+ space.id + "' class='col col-md-4'>"+ space.xCoord +","+ space.yCoord+ "</div>");
-            } else {
-                $("#row3").append("<div id='"+ space.id + "' class='col col-md-4'>"+ space.xCoord +","+ space.yCoord+ "</div>");
-            };
+            // if (space.id <= 3) {
+            //     $("#row1").append("<div id='"+ space.id + "' class='col col-md-4'></div>");
+                
+            // } else if (space.id <=6 ) {
+            //     $("#row2").append("<div id='"+ space.id + "' class='col col-md-4'></div>");
+                    
+                               
+            // } else {
+            //     $("#row3").append("<div id='"+ space.id + "' class='col col-md-4'></div>");         
+            // };
         };
+        
 
-        gameObject.addPlayer(newPlayer);
+   
         $("form").hide();
         
         console.log(boardObject);
-        $(`"col`).click(function(){
-            
-            console.log(this.boardObject.space);
-        });
+        
+        
     });
+    
 });
 

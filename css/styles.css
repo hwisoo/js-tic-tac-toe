@@ -1,12 +1,14 @@
 .col {
-    width: 33%;
+    max-width: 250px;
+    
     border: 2px solid;
-    padding-top: 28%;
+    padding-top: 30px;
+    text-align: center;
+    font-size: 6rem;
 }
 
-#board {
-    width: 60%; 
-    border: 2px solid;   
+.row {
+    height:200px;
 }
 
 #header {
