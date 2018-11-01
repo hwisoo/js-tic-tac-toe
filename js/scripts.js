@@ -1,26 +1,31 @@
 //Business Logic
 
 
-//Game Object
-function GameObject() {
-    this.players = [],
-    this.currentId = 0
-}
+// //Game Object
+// function GameObject() {
+//     this.players = [],
+//     this.currentId = 0
+// }
 
-GameObject.prototype.addPlayer = function(player) {
-    player.id = this.assignId();
-    this.players.push(player);
-}
+// GameObject.prototype.addPlayer = function(player) {
+//     player.id = this.assignId();
+//     this.players.push(player);
+// }
 
-GameObject.prototype.assignId = function() {
-    this.currentId += 1;
-    return this.currentId;
-}
+// GameObject.prototype.assignId = function() {
+//     this.currentId += 1;
+//     return this.currentId;
+// }
 
 //Board Object 
 function BoardObject(){
     this.spaces = [],
-    this.currentId = 0
+    this.currentId = 0,
+    this.players = []
+}
+
+BoardObject.prototype.addPlayer = function(player) {
+    this.players.push(player)
 }
 
 BoardObject.prototype.addSpaces = function(space) {
@@ -84,55 +89,55 @@ BoardObject.prototype.updateSpace = function(clickid) {
     };
 }
 
-BoardObject.prototype.winCheck = function() {
+BoardObject.prototype.winCheck = function(playerOne, playerTwo) {
     //debugger;
     if (boardObject.spaces[0].current === "X" && boardObject.spaces[1].current === "X" && boardObject.spaces[2].current === "X") {
-        $("#winMessage").text("Player 1 Wins");
+        $("#winMessage").text(boardObject.players[0].name + " Wins!");
     } else if (boardObject.spaces[3].current === "X" && boardObject.spaces[4].current === "X" && boardObject.spaces[5].current === "X") {
-        $("#winMessage").text("Player 1 Wins");
+        $("#winMessage").text(boardObject.players[0].name + " Wins!");
     } else if (boardObject.spaces[6].current === "X" && boardObject.spaces[7].current === "X" && boardObject.spaces[8].current === "X") {
-        $("#winMessage").text("Player 1 Wins");
+        $("#winMessage").text(boardObject.players[0].name + " Wins!");
     } else if (boardObject.spaces[0].current === "X" && boardObject.spaces[3].current === "X" && boardObject.spaces[6].current === "X") {
-        $("#winMessage").text("Player 1 Wins");
+        $("#winMessage").text(boardObject.players[0].name + " Wins!");
     } else if (boardObject.spaces[1].current === "X" && boardObject.spaces[4].current === "X" && boardObject.spaces[7].current === "X") {
-        $("#winMessage").text("Player 1 Wins");
+        $("#winMessage").text(boardObject.players[0].name + " Wins!");
     } else if (boardObject.spaces[2].current === "X" && boardObject.spaces[5].current === "X" && boardObject.spaces[8].current === "X") {
-        $("#winMessage").text("Player 1 Wins");
+        $("#winMessage").text(boardObject.players[0].name + " Wins!");
     } else if (boardObject.spaces[0].current === "X" && boardObject.spaces[4].current === "X" && boardObject.spaces[8].current === "X") {
-        $("#winMessage").text("Player 1 Wins");
+        $("#winMessage").text(boardObject.players[0].name + " Wins!");
     } else if (boardObject.spaces[2].current === "X" && boardObject.spaces[4].current === "X" && boardObject.spaces[6].current === "X") {
-        $("#winMessage").text("Player 1 Wins");
+        $("#winMessage").text(boardObject.players[0].name + " Wins!");
     } else if (boardObject.spaces[0].current === "O" && boardObject.spaces[1].current === "O" && boardObject.spaces[2].current === "O") {
-        $("#winMessage").text("Player 2 Wins");
+        $("#winMessage").text(boardObject.players[1].name + " Wins!");
     } else if (boardObject.spaces[3].current === "O" && boardObject.spaces[4].current === "O" && boardObject.spaces[5].current === "O") {
-        $("#winMessage").text("Player 2 Wins");
+        $("#winMessage").text(boardObject.players[1].name + " Wins!");
     } else if (boardObject.spaces[6].current === "O" && boardObject.spaces[7].current === "O" && boardObject.spaces[8].current === "O") {
-        $("#winMessage").text("Player 2 Wins");
+        $("#winMessage").text(boardObject.players[1].name + " Wins!");
     } else if (boardObject.spaces[0].current === "O" && boardObject.spaces[3].current === "O" && boardObject.spaces[6].current === "O") {
-        $("#winMessage").text("Player 2 Wins");
+        $("#winMessage").text(boardObject.players[1].name + " Wins!");
     } else if (boardObject.spaces[1].current === "O" && boardObject.spaces[4].current === "O" && boardObject.spaces[7].current === "O") {
-        $("#winMessage").text("Player 2 Wins");
+        $("#winMessage").text(boardObject.players[1].name + " Wins!");
     } else if (boardObject.spaces[2].current === "O" && boardObject.spaces[5].current === "O" && boardObject.spaces[8].current === "O") {
-        $("#winMessage").text("Player 2 Wins");
+        $("#winMessage").text(boardObject.players[1].name + " Wins!");
     } else if (boardObject.spaces[0].current === "O" && boardObject.spaces[4].current === "O" && boardObject.spaces[8].current === "O") {
-        $("#winMessage").text("Player 2 Wins");
+        $("#winMessage").text(boardObject.players[1].name + " Wins!");
     } else if (boardObject.spaces[2].current === "O" && boardObject.spaces[4].current === "O" && boardObject.spaces[6].current === "O") {
-        $("#winMessage").text("Player 2 Wins");
+        $("#winMessage").text(boardObject.players[1].name + " Wins!");
     };
 }
 
 
 
 //User Interface Logic
-var gameObject = new GameObject();
+// var gameObject = new GameObject();
 var boardObject = new BoardObject();
 
 $(document).ready(function() {
 
     $("#inputButton").click(function(event) {
         event.preventDefault();
-        var playerOne = $("input#player1").val();
-        var playerTwo = $("input#player1").val();
+        var playerOneName = $("input#player1").val();
+        var playerTwoName = $("input#player2").val();
         var playerDifficulty = $("select#difficulty").val();
         var filled = false;
         var current = "";
@@ -140,10 +145,10 @@ $(document).ready(function() {
         var yCoord = 0;
         var marker = "";
         
-        var newPlayerOne = new PlayerObject(playerOne, playerDifficulty, marker);
-        gameObject.addPlayer(newPlayerOne);
-        var newPlayerTwo = new PlayerObject(playerTwo, playerDifficulty, marker);
-        gameObject.addPlayer(newPlayerTwo);
+        var newPlayerOne = new PlayerObject(playerOneName, playerDifficulty, marker);
+        boardObject.addPlayer(newPlayerOne);
+        var newPlayerTwo = new PlayerObject(playerTwoName, playerDifficulty, marker);
+        boardObject.addPlayer(newPlayerTwo);
         
         //debugger;
         for(var i =0; i < 9; i++){
@@ -155,8 +160,7 @@ $(document).ready(function() {
         $("form").hide();
         $("#board").show();
         console.log(boardObject);
-        
-        
+    
     });
 
     counter = 0;
