@@ -155,11 +155,12 @@ $(document).ready(function() {
     
     $("div.clickable").click(function(e){
         var click = e.target;
+        console.log(click);
         
 
-        console.log(click.id);
+        
         if ($(`div#${click.id}`).hasClass("clickable") === true) {
-            if(click && counter%2 ==0 ) {
+            if(counter%2 ==0 ) {
                 
                 $(`div#${click.id}`).text("X");
                 $(`div#${click.id}`).removeClass("clickable");
@@ -167,7 +168,7 @@ $(document).ready(function() {
                 boardObject.updateSpace(click.id);
                 boardObject.winCheck();
                 
-            } else if(click && counter%2 !=0 ){
+            } else if(counter%2 !=0 ){
                 
                 $(`div#${click.id}`).text("O");
                 $(`div#${click.id}`).removeClass("clickable");
