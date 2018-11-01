@@ -15,12 +15,13 @@
     margin-top: 30px;
     margin: auto;
     width: 70%;
+    font-family: 'Rock Salt', cursive;
 }
 #header{
     text-align: center;
    padding: 30px;
     height: 150px;
-    font-family: 'Reenie Beanie', cursive;
+    font-family: 'Rock Salt', cursive;
    
 }
 h1 {
@@ -30,4 +31,8 @@ h1 {
 .container {
     margin-left: 50px;
     margin-top: 30px;
+}
+
+#board {
+    display: none;
 }
