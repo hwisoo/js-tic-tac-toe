@@ -1,22 +1,6 @@
 //Business Logic
 
 
-// //Game Object
-// function GameObject() {
-//     this.players = [],
-//     this.currentId = 0
-// }
-
-// GameObject.prototype.addPlayer = function(player) {
-//     player.id = this.assignId();
-//     this.players.push(player);
-// }
-
-// GameObject.prototype.assignId = function() {
-//     this.currentId += 1;
-//     return this.currentId;
-// }
-
 //Board Object 
 function BoardObject(){
     this.spaces = [],
@@ -124,12 +108,16 @@ BoardObject.prototype.winCheck = function(playerOne, playerTwo) {
     } else if (boardObject.spaces[2].current === "O" && boardObject.spaces[4].current === "O" && boardObject.spaces[6].current === "O") {
         $("#winMessage").text(boardObject.players[1].name + " Wins!");
     };
+
+    if (boardObject.spaces[0].filled === true && boardObject.spaces[1].filled === true && boardObject.spaces[2].filled === true && boardObject.spaces[3].filled === true && boardObject.spaces[4].filled === true && boardObject.spaces[5].filled === true && boardObject.spaces[6].filled === true && boardObject.spaces[7].filled === true && boardObject.spaces[8].filled === true) {
+        $("#winMessage").text("It's a tie!"); 
+    };
 }
 
 
 
 //User Interface Logic
-// var gameObject = new GameObject();
+
 var boardObject = new BoardObject();
 
 $(document).ready(function() {
@@ -190,6 +178,9 @@ $(document).ready(function() {
         };
         
     });
+    $("#reloadButton").click(function() {
+        location.reload();
+    })
     
 });
 
